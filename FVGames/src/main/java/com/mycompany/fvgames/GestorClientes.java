@@ -72,4 +72,19 @@ public class GestorClientes {
             e.printStackTrace();
         }
     }
+    public boolean eliminarCliente(int id) {
+    String sql = "DELETE FROM Cliente WHERE id = ?";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setInt(1, id);
+
+        int rowsDeleted = statement.executeUpdate();
+        return rowsDeleted > 0;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
 }
