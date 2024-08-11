@@ -57,15 +57,21 @@ public class FVGames {
                 case 1:
                     System.out.print("Nombre: ");
                     String nombre = scanner.nextLine();
+                    System.out.print("Apellidos: ");
+                    String apellidos = scanner.nextLine();
                     System.out.print("Cédula: ");
                     String cedula = scanner.nextLine();
+                    System.out.print("Direccion: ");
+                    String direccion = scanner.nextLine();
+                    System.out.print("Email: ");
+                    String email = scanner.nextLine();
                     System.out.print("Contraseña: ");
                     String contrasena = scanner.nextLine();
                     System.out.print("Saldo: ");
                     double saldo = scanner.nextDouble();
                     scanner.nextLine();  // Limpiar el buffer
 
-                    boolean clienteAgregado = gestorClientes.agregarCliente(nombre, cedula, contrasena, saldo);
+                    boolean clienteAgregado = gestorClientes.agregarCliente(nombre, apellidos, cedula, direccion, email, contrasena, saldo);
                     if (clienteAgregado) {
                         System.out.println("Cliente agregado exitosamente.");
                     } else {
@@ -91,13 +97,19 @@ public class FVGames {
                     if (clienteActualizar != null) {
                         System.out.print("Nuevo nombre: ");
                         String nuevoNombre = scanner.nextLine();
+                        System.out.print("Nuevo apellido: ");
+                        String nuevoApellido = scanner.nextLine();
+                        System.out.print("Nueva direccion: ");
+                        String nuevaDireccion = scanner.nextLine();
                         System.out.print("Nueva contraseña: ");
                         String nuevaContrasena = scanner.nextLine();
+                        System.out.print("Nuevo email: ");
+                        String nuevoEmail = scanner.nextLine();
                         System.out.print("Nuevo saldo: ");
                         double nuevoSaldo = scanner.nextDouble();
                         scanner.nextLine();  // Limpiar el buffer
 
-                        boolean clienteActualizado = gestorClientes.agregarCliente(nuevoNombre, cedulaActualizar, nuevaContrasena, nuevoSaldo);
+                        boolean clienteActualizado = gestorClientes.agregarCliente(nuevoNombre, nuevoApellido, cedulaActualizar, nuevaDireccion, nuevoEmail, nuevaContrasena, nuevoSaldo);
                         if (clienteActualizado) {
                             System.out.println("Cliente actualizado exitosamente.");
                         } else {

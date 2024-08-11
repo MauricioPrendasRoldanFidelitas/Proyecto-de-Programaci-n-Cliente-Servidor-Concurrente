@@ -1,6 +1,2 @@
 com\mycompany\fvgames\GestorProductos.class
-com\mycompany\fvgames\GestorClientes.class
-com\mycompany\fvgames\Cliente.class
-com\mycompany\fvgames\DatabaseConnection.class
-com\mycompany\fvgames\FVGames.class
 com\mycompany\fvgames\Producto.class
