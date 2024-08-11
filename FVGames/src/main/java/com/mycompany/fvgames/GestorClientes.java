@@ -21,18 +21,24 @@ public class GestorClientes {
         }
     }
 
-    public void registrarCliente(Cliente cliente) {
+    public boolean agregarCliente(String nombre, String cedula, String contrasena, double saldo) {
         String sql = "INSERT INTO Cliente (nombre, cedula, contrasena, saldo) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, cliente.getNombre());
-            stmt.setString(2, cliente.getCedula());
-            stmt.setString(3, cliente.getContrasena());
-            stmt.setDouble(4, cliente.getSaldo());
-            stmt.executeUpdate();
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, nombre);
+            statement.setString(2, cedula);
+            statement.setString(3, contrasena);
+            statement.setDouble(4, saldo);
+
+            int rowsInserted = statement.executeUpdate();
+            return rowsInserted > 0;
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
+
 
     public Cliente autenticarCliente(String cedula, String contrasena) {
         String sql = "SELECT * FROM Cliente WHERE cedula = ? AND contrasena = ?";
@@ -86,5 +92,26 @@ public class GestorClientes {
         return false;
     }
 }
+public Cliente buscarClientePorCedula(String cedula) {
+    String sql = "SELECT * FROM Cliente WHERE cedula = ?";
 
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, cedula);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String nombre = resultSet.getString("nombre");
+            String contrasena = resultSet.getString("contrasena");
+            double saldo = resultSet.getDouble("saldo");
+
+            return new Cliente(id, nombre, cedula, contrasena, saldo);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return null;
+}
 }
