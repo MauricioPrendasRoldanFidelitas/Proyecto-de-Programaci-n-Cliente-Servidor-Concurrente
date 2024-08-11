@@ -12,6 +12,15 @@ import java.sql.*;
  */
 public class GestorProductos {
     private Connection connection;
+
+    public GestorProductos() {
+        try {
+            this.connection = DatabaseConnection.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     public boolean agregarProducto(String nombre, String descripcion, double precio, int cantidad) {
     String sql = "INSERT INTO Producto (nombre, descripcion, precio, cantidad) VALUES (?, ?, ?, ?)";
