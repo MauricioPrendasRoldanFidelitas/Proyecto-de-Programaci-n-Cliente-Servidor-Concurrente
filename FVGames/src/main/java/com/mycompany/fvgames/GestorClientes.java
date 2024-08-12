@@ -21,17 +21,14 @@ public class GestorClientes {
         }
     }
 
-    public boolean agregarCliente(String nombre, String apellidos, String cedula, String direccion, String email, String contrasena, double saldo) {
-        String sql = "INSERT INTO Cliente (nombre, apellidos, cedula, direccion, email, contrasena, saldo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public boolean agregarCliente(String nombre, String cedula, String contrasena, double saldo) {
+        String sql = "INSERT INTO Cliente (nombre, cedula, contrasena, saldo) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, nombre);
-            statement.setString(2, apellidos);
-            statement.setString(3, cedula);
-            statement.setString(4, direccion);
-            statement.setString(5, email);
-            statement.setString(6, contrasena);
-            statement.setDouble(7, saldo);
+            statement.setString(2, cedula);
+            statement.setString(3, contrasena);
+            statement.setDouble(4, saldo);
 
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
@@ -50,7 +47,8 @@ public class GestorClientes {
             stmt.setString(2, contrasena);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Cliente(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("cedula"), rs.getString("direccion"), rs.getString("email"), rs.getString("contrasena"), rs.getDouble("saldo"));
+                return new Cliente(rs.getInt("id"), rs.getString("nombre"), rs.getString("cedula"),
+                        rs.getString("contrasena"), rs.getDouble("saldo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,13 +103,10 @@ public Cliente buscarClientePorCedula(String cedula) {
         if (resultSet.next()) {
             int id = resultSet.getInt("id");
             String nombre = resultSet.getString("nombre");
-            String apellidos = resultSet.getString("apellidos");
             String contrasena = resultSet.getString("contrasena");
-            String direccion = resultSet.getString("direccion");
-            String email = resultSet.getString("email");
             double saldo = resultSet.getDouble("saldo");
 
-            return new Cliente(id, nombre, apellidos, cedula, direccion, email, contrasena, saldo);
+            return new Cliente(id, nombre, cedula, contrasena, saldo);
         }
     } catch (SQLException e) {
         e.printStackTrace();
