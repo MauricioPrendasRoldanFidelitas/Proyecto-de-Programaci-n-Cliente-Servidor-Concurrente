@@ -15,13 +15,16 @@ public class FVGames {
         Scanner scanner = new Scanner(System.in);
         GestorClientes gestorClientes = new GestorClientes();
         GestorProductos gestorProductos = new GestorProductos();
+        CarritoCompras carritoCompras = new CarritoCompras(); 
+
         int opcion;
 
         do {
             System.out.println("\n--- Menú Principal ---");
             System.out.println("1. Gestión de Clientes");
             System.out.println("2. Gestión de Productos");
-            System.out.println("3. Salir");
+            System.out.println("3. Ver Carrito de Compras");
+            System.out.println("4. Salir");
             System.out.print("Selecciona una opción: ");
             opcion = scanner.nextInt();
             scanner.nextLine();  // Limpiar el buffer
@@ -34,12 +37,18 @@ public class FVGames {
                     menuProductos(scanner, gestorProductos);
                     break;
                 case 3:
+                    carritoCompras.mostrarCarrito();
+                    menuCarrito(scanner, gestorProductos, carritoCompras);
+                    System.out.println("Total a pagar: " + carritoCompras.calcularTotal());
+                    
+                    break;
+                case 4:
                     System.out.println("Saliendo...");
                     break;
                 default:
                     System.out.println("Opción no válida. Intenta nuevamente.");
             }
-        } while (opcion != 3);
+        } while (opcion != 4);
     }
 
     public static void menuClientes(Scanner scanner, GestorClientes gestorClientes) {
@@ -247,5 +256,51 @@ public class FVGames {
                     System.out.println("Opción no válida. Intenta nuevamente.");
             }
         } while (opcionProductos != 5);
+    }
+    public static void menuCarrito(Scanner scanner, GestorProductos gestorProductos, CarritoCompras carritoCompras) {
+        int opcionProductos;
+        do {
+            System.out.println("\n--- Gestión del carrito ---");
+            System.out.println("1. Agregar Producto al Carrito");
+            System.out.println("2. Eliminar Producto del Carrito");
+            System.out.println("3. Mostrar Carrito de Compras");
+            System.out.println("4. Volver al Menú Principal");
+            System.out.print("Selecciona una opción: ");
+            opcionProductos = scanner.nextInt();
+            scanner.nextLine();  // Limpiar el buffer
+
+            switch (opcionProductos) {
+                case 1:
+                    System.out.print("ID del producto a agregar: ");
+                    int idProductoAgregar = scanner.nextInt();
+                    scanner.nextLine();  // Limpiar el buffer
+                    Producto productoAgregar = gestorProductos.buscarProductoPorId(idProductoAgregar);
+                    if (productoAgregar != null) {
+                        carritoCompras.agregarProducto(productoAgregar);
+                    } else {
+                        System.out.println("Producto no encontrado.");
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("ID del producto a eliminar del carrito: ");
+                    int idProductoEliminar = scanner.nextInt();
+                    scanner.nextLine();  // Limpiar el buffer
+                    carritoCompras.eliminarProducto(idProductoEliminar);
+                    break;
+
+                case 3:
+                    carritoCompras.mostrarCarrito();
+                    System.out.println("Total a pagar: " + carritoCompras.calcularTotal());
+                    break;
+
+                case 4:
+                    System.out.println("Volviendo al Menú Principal...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida. Intenta nuevamente.");
+            }
+        } while (opcionProductos != 4);
     }
 }
