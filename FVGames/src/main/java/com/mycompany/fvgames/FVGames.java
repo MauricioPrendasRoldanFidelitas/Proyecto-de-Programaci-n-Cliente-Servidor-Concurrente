@@ -4,7 +4,6 @@
 
 package com.mycompany.fvgames;
 import java.util.Scanner;
-import Jam.FV;
 
 /**
  *
@@ -13,9 +12,6 @@ import Jam.FV;
 public class FVGames {
 
     public static void main(String[] args) {
-        FV fvgame = new FV();
-        fvgame.setVisible(true);
-        fvgame.setLocationRelativeTo(null);
         Scanner scanner = new Scanner(System.in);
         GestorClientes gestorClientes = new GestorClientes();
         GestorProductos gestorProductos = new GestorProductos();

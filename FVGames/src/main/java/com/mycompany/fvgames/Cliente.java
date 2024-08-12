@@ -11,19 +11,23 @@ package com.mycompany.fvgames;
 public class Cliente {
     private int id;
     private String nombre;
+    private String apellido;
     private String cedula;
+    private String direccion;
+    private String email;
     private String contrasena;
     private double saldo;
 
-    public Cliente(int id, String nombre, String cedula, String contrasena, double saldo) {
+    public Cliente(int id, String nombre, String apellido, String cedula, String direccion, String email, String contrasena, double saldo) {
         this.id = id;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.cedula = cedula;
+        this.direccion = direccion;
+        this.email = email;
         this.contrasena = contrasena;
         this.saldo = saldo;
     }
-
-    // Getters y Setters
 
     public int getId() {
         return id;
@@ -41,12 +45,36 @@ public class Cliente {
         this.nombre = nombre;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
     public String getCedula() {
         return cedula;
     }
 
     public void setCedula(String cedula) {
         this.cedula = cedula;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getContrasena() {
@@ -64,5 +92,7 @@ public class Cliente {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+
+    
 }
 
