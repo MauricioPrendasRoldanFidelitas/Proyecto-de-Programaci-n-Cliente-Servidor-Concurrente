@@ -2,13 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.fvgames;
+package com.mycompany.clientefvgames;
+
+import java.io.Serializable;
 
 /**
  *
  * @author Melvin Prendas
  */
-public class Cliente {
+public class Cliente implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String nombre;
     private String apellido;
@@ -18,8 +21,7 @@ public class Cliente {
     private String contrasena;
     private double saldo;
 
-    public Cliente(int id, String nombre, String apellido, String cedula, String direccion, String email, String contrasena, double saldo) {
-        this.id = id;
+    public Cliente(String nombre, String apellido, String cedula, String direccion, String email, String contrasena, double saldo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;

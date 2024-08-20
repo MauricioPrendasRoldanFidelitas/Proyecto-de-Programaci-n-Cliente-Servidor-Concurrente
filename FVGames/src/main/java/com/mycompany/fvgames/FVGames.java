@@ -3,6 +3,8 @@
  */
 
 package com.mycompany.fvgames;
+import com.mycompany.servidorfvgames.modelo.Cliente;
+import com.mycompany.servidorfvgames.modelo.Producto;
 import java.util.Scanner;
 
 /**

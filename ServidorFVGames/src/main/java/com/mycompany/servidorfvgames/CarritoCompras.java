@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.fvgames;
+package com.mycompany.servidorfvgames;
 
+import com.mycompany.servidorfvgames.dao.ProductoDAO;
 import com.mycompany.servidorfvgames.modelo.Producto;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,30 @@ public class CarritoCompras {
         System.out.println("Producto agregado al carrito: " + producto.getNombre());
     }
 
+    public void agregarProducto(int idProducto, int cantidad) throws Exception {
+        ProductoDAO productoDAO = new ProductoDAO();
+        Producto producto = productoDAO.buscarPorId(idProducto);
+
+        if (producto == null) {
+            throw new Exception("Producto no encontrado con el ID proporcionado.");
+        }
+
+        if (cantidad <= 0) {
+            throw new Exception("La cantidad debe ser mayor que cero.");
+        }
+
+        producto.setStock(cantidad);
+        productos.add(producto);
+    }
+
+    // Otros métodos relacionados al carrito...
+
+    public List<Producto> obtenerProductos() {
+        return productos;
+    }
+    
+    
+    
     public void eliminarProducto(int id) {
         Producto productoAEliminar = null;
 

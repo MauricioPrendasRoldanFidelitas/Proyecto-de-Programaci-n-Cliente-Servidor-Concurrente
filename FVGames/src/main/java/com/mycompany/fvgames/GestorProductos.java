@@ -4,6 +4,7 @@
  */
 package com.mycompany.fvgames;
 
+import com.mycompany.servidorfvgames.modelo.Producto;
 import java.sql.*;
 
 /**

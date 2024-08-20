@@ -2,21 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.fvgames;
+package com.mycompany.servidorfvgames.modelo;
+
+import java.io.Serializable;
 
 /**
  *
  * @author Melvin Prendas
  */
-public class Producto {
+public class Producto implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String nombre;
     private String categoria;
     private double precio;
     private int stock;
 
-    public Producto(int id, String nombre, String categoria, double precio, int stock) {
-        this.id = id;
+    public Producto(String nombre, String categoria, double precio, int stock) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
