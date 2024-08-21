@@ -32,7 +32,7 @@ public class ServidorFVGames {
             while (true) {
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    //new Thread(() -> {
+                    new Thread(() -> {
                         try (ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
                              ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream())) {
 
@@ -182,7 +182,7 @@ public class ServidorFVGames {
                             System.out.println("Error al procesar la solicitud del cliente: " + e.getMessage());
                             e.printStackTrace();
                         }
-                    //}).start();
+                    }).start();
 
                 } catch (IOException e) {
                     System.out.println("Error al aceptar la conexión del cliente: " + e.getMessage());
