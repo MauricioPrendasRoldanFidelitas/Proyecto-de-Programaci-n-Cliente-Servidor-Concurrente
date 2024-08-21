@@ -32,7 +32,11 @@ public class ServidorFVGames {
             while (true) {
                 try {
                     Socket clientSocket = serverSocket.accept();
+<<<<<<< Updated upstream
                     //new Thread(() -> {
+=======
+                    new Thread(() -> {
+>>>>>>> Stashed changes
                         try (ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
                              ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream())) {
 
@@ -42,8 +46,13 @@ public class ServidorFVGames {
                             CarritoCompras carrito = new CarritoCompras();
                             PaqueteDAO paqueteDAO = new PaqueteDAO();
 
+<<<<<<< Updated upstream
                             String request = (String) in.readObject();
                                 System.out.println(request);
+=======
+                            String request;
+                            while ((request = (String) in.readObject()) != null) {
+>>>>>>> Stashed changes
                                 switch (request) {
                                     case "OBTENER_CLIENTES":
                                         List<Cliente> clientes = clienteDAO.obtenerTodos();
@@ -177,12 +186,20 @@ public class ServidorFVGames {
                                     default:
                                         out.writeObject("Solicitud no reconocida.");
                                 }
+<<<<<<< Updated upstream
                             
                         } catch (IOException | ClassNotFoundException e) {
                             System.out.println("Error al procesar la solicitud del cliente: " + e.getMessage());
                             e.printStackTrace();
                         }
                     //}).start();
+=======
+                            }
+                        } catch (IOException | ClassNotFoundException e) {
+                            System.out.println("Error al procesar la solicitud del cliente: " + e.getMessage());
+                        }
+                    }).start();
+>>>>>>> Stashed changes
 
                 } catch (IOException e) {
                     System.out.println("Error al aceptar la conexión del cliente: " + e.getMessage());
