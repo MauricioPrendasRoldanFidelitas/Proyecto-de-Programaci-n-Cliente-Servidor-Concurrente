@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.clientefvgames;
+package com.mycompany.clientefvgames.vista;
 
+import com.mycompany.clientefvgames.Cliente;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -68,12 +69,13 @@ public class PanelAgregarCliente extends javax.swing.JPanel {
                 double saldo = Double.parseDouble(saldoField.getText());
                 // Crear un objeto Cliente
                 Cliente nuevoCliente = new Cliente(nombre, apellido, cedula, direccion, email, contrasena, saldo);
+                
 
                 try (Socket socket = new Socket("localhost", 12345);
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
-                // Enviar solicitud al servidor
+                // Enviar solicitud al servidor/
                 out.writeObject("AGREGAR_CLIENTE");
                 System.out.println("Enviando objeto Cliente: " + nuevoCliente);
                 out.writeObject(nuevoCliente);

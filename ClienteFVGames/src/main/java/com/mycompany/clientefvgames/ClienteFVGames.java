@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 package com.mycompany.clientefvgames;
+import com.mycompany.clientefvgames.vista.MainFrame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;

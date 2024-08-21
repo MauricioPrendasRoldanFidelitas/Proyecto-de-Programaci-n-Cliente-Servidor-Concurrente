@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.clientefvgames;
+package com.mycompany.clientefvgames.vista;
+import com.mycompany.clientefvgames.Paquete;
+import com.mycompany.clientefvgames.Producto;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

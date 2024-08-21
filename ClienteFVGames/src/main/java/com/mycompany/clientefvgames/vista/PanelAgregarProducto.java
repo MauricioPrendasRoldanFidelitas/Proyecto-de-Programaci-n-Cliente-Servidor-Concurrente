@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.clientefvgames;
+package com.mycompany.clientefvgames.vista;
+import com.mycompany.clientefvgames.Producto;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,65 +11,70 @@ import java.awt.event.ActionListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
 /**
  *
  * @author Melvin Prendas
  */
-public class PanelAgregarCompra extends javax.swing.JPanel {
+public class PanelAgregarProducto extends javax.swing.JPanel {
 
-    private JTextField idClienteField;
-    private JTextField idProductoField;
+    private JTextField nombreField;
+    private JTextField categoriaField;
+    private JTextField precioField;
     private JTextField cantidadField;
-    private JButton agregarCompraButton;
+    private JButton agregarButton;
 
-    public PanelAgregarCompra() {
-        setLayout(new GridLayout(4, 2, 10, 10));
+    public PanelAgregarProducto() {
+        setLayout(new GridLayout(5, 2, 10, 10));
 
-        JLabel idClienteLabel = new JLabel("ID Cliente:");
-        idClienteField = new JTextField();
+        JLabel nombreLabel = new JLabel("Nombre:");
+        nombreField = new JTextField();
 
-        JLabel idProductoLabel = new JLabel("ID Producto:");
-        idProductoField = new JTextField();
+        JLabel categoriaLabel = new JLabel("Categoría:");
+        categoriaField = new JTextField();
+
+        JLabel precioLabel = new JLabel("Precio:");
+        precioField = new JTextField();
 
         JLabel cantidadLabel = new JLabel("Cantidad:");
         cantidadField = new JTextField();
 
-        agregarCompraButton = new JButton("Agregar Compra");
+        agregarButton = new JButton("Agregar Producto");
 
-        add(idClienteLabel);
-        add(idClienteField);
-        add(idProductoLabel);
-        add(idProductoField);
+        add(nombreLabel);
+        add(nombreField);
+        add(categoriaLabel);
+        add(categoriaField);
+        add(precioLabel);
+        add(precioField);
         add(cantidadLabel);
         add(cantidadField);
         add(new JLabel()); // empty cell for spacing
-        add(agregarCompraButton);
+        add(agregarButton);
 
         // Acción del botón
-        agregarCompraButton.addActionListener(new ActionListener() {
+        agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                agregarCompra();
+                agregarProducto();
             }
         });
     }
 
-    private void agregarCompra() {
+    private void agregarProducto() {
         try {
-            int idCliente = Integer.parseInt(idClienteField.getText());
-            int idProducto = Integer.parseInt(idProductoField.getText());
+            String nombre = nombreField.getText();
+            String categoria = categoriaField.getText();
+            double precio = Double.parseDouble(precioField.getText());
             int cantidad = Integer.parseInt(cantidadField.getText());
 
-            // Creas una compra, asignándole el id del cliente y el id del producto
-            Compra nuevaCompra = new Compra(idCliente, idProducto, cantidad);
+            Producto nuevoProducto = new Producto(nombre, categoria, precio, cantidad);
 
-            // Envío de la compra al servidor
+            // Envío del producto al servidor
             Socket socket = new Socket("localhost", 12345); // Ajusta la IP y puerto según sea necesario
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-            out.writeObject("AGREGAR_COMPRA");
-            out.writeObject(nuevaCompra);
+            out.writeObject("AGREGAR_PRODUCTO");
+            out.writeObject(nuevoProducto);
 
             // Respuesta del servidor
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -79,13 +85,14 @@ public class PanelAgregarCompra extends javax.swing.JPanel {
             out.close();
             socket.close();
 
-            // Limpiar los campos después de agregar la compra
-            idClienteField.setText("");
-            idProductoField.setText("");
+            // Limpiar los campos después de agregar
+            nombreField.setText("");
+            categoriaField.setText("");
+            precioField.setText("");
             cantidadField.setText("");
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al agregar la compra: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al agregar el producto: " + ex.getMessage());
         }
     }
 

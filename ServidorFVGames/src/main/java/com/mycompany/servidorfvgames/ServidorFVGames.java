@@ -32,7 +32,7 @@ public class ServidorFVGames {
             while (true) {
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    new Thread(() -> {
+                    //new Thread(() -> {
                         try (ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
                              ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream())) {
 
@@ -42,8 +42,8 @@ public class ServidorFVGames {
                             CarritoCompras carrito = new CarritoCompras();
                             PaqueteDAO paqueteDAO = new PaqueteDAO();
 
-                            String request;
-                            while ((request = (String) in.readObject()) != null) {
+                            String request = (String) in.readObject();
+                                System.out.println(request);
                                 switch (request) {
                                     case "OBTENER_CLIENTES":
                                         List<Cliente> clientes = clienteDAO.obtenerTodos();
@@ -177,11 +177,12 @@ public class ServidorFVGames {
                                     default:
                                         out.writeObject("Solicitud no reconocida.");
                                 }
-                            }
+                            
                         } catch (IOException | ClassNotFoundException e) {
                             System.out.println("Error al procesar la solicitud del cliente: " + e.getMessage());
+                            e.printStackTrace();
                         }
-                    }).start();
+                    //}).start();
 
                 } catch (IOException e) {
                     System.out.println("Error al aceptar la conexión del cliente: " + e.getMessage());
