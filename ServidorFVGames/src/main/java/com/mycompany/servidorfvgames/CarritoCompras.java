@@ -5,7 +5,7 @@
 package com.mycompany.servidorfvgames;
 
 import com.mycompany.servidorfvgames.dao.ProductoDAO;
-import com.mycompany.servidorfvgames.modelo.Producto;
+import com.mycompany.fvgames.modelo.Producto;
 import java.util.ArrayList;
 import java.util.List;
 

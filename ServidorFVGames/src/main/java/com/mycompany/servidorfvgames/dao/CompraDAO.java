@@ -4,8 +4,8 @@
  */
 package com.mycompany.servidorfvgames.dao;
 import com.mycompany.servidorfvgames.CarritoCompras;
-import com.mycompany.servidorfvgames.modelo.Compra;
-import com.mycompany.servidorfvgames.modelo.Producto;
+import com.mycompany.fvgames.modelo.Compra;
+import com.mycompany.fvgames.modelo.Producto;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,11 @@ public class CompraDAO {
     }
 
     public void agregarCompra(Compra compra) throws SQLException {
-        String query = "INSERT INTO Compra (id_cliente, id_producto, cantidad, fecha) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO Compra (id_cliente, id_producto, cantidad, fecha) VALUES (?, ?, ?, sysdate())";
         try (PreparedStatement stmt = conexion.prepareStatement(query)) {
             stmt.setInt(1, compra.getIdCliente());
             stmt.setInt(2, compra.getIdProducto());
             stmt.setInt(3, compra.getCantidad());
-            stmt.setTimestamp(4, new Timestamp(compra.getFecha().getTime()));
             stmt.executeUpdate();
         }
     }

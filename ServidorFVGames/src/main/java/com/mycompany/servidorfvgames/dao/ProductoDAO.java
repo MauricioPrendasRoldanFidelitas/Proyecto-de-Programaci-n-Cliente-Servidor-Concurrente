@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.servidorfvgames.dao;
-import com.mycompany.servidorfvgames.modelo.Producto;
+import com.mycompany.fvgames.modelo.Producto;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class ProductoDAO {
     }
 
     public boolean insertar(Producto producto) {
-        String sql = "INSERT INTO Producto (nombre, categoria, precio, stock) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Producto (nombre, categoria, precio, cantidad) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, producto.getNombre());
             ps.setString(2, producto.getCategoria());
@@ -38,12 +38,14 @@ public class ProductoDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Producto(
+                Producto producto = new Producto(
                     rs.getString("nombre"),
                     rs.getString("categoria"),
                     rs.getDouble("precio"),
-                    rs.getInt("stock")
+                    rs.getInt("cantidad")
                 );
+                producto.setId(id);
+                return producto;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,8 +88,9 @@ public class ProductoDAO {
                     rs.getString("nombre"),
                     rs.getString("categoria"),
                     rs.getDouble("precio"),
-                    rs.getInt("stock")
+                    rs.getInt("cantidad")
                 );
+                producto.setId(rs.getInt("id"));
                 listaProductos.add(producto);
             }
         } catch (SQLException e) {

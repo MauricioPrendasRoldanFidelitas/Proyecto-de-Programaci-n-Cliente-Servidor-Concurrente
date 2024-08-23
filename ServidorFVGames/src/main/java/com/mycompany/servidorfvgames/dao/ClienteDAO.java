@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.servidorfvgames.dao;
-import com.mycompany.servidorfvgames.modelo.Cliente;
+import com.mycompany.fvgames.modelo.Cliente;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class ClienteDAO {
             ps.setString(1, cedula);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Cliente(
+                Cliente cliente = new Cliente(
                     rs.getString("nombre"),
                     rs.getString("apellido"),
                     rs.getString("cedula"),
@@ -54,6 +54,8 @@ public class ClienteDAO {
                     rs.getString("contrasena"),
                     rs.getDouble("saldo")
                 );
+                cliente.setId(rs.getInt("id"));
+                return cliente;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,6 +105,7 @@ public class ClienteDAO {
                     rs.getString("contrasena"),
                     rs.getDouble("saldo")
                 );
+                cliente.setId(rs.getInt("id"));
                 listaClientes.add(cliente);
             }
         } catch (SQLException e) {

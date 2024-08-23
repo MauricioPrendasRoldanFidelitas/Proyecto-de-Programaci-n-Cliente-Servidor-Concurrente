@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.mycompany.clientefvgames.vista;
-import com.mycompany.clientefvgames.Compra;
+
+import com.mycompany.fvgames.modelo.Compra;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

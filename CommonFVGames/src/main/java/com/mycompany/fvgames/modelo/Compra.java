@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.servidorfvgames.modelo;
+package com.mycompany.fvgames.modelo;
 import java.io.Serializable;
 import java.util.Date;
 /**
@@ -60,7 +60,6 @@ public class Compra implements Serializable {
         this.fecha = fecha;
     }
 
-    
 
     public Compra(int idCliente, int idProducto, int cantidad) {
         this.idCliente = idCliente;

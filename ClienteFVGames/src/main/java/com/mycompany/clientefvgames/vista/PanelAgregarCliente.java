@@ -4,7 +4,8 @@
  */
 package com.mycompany.clientefvgames.vista;
 
-import com.mycompany.clientefvgames.Cliente;
+
+import com.mycompany.fvgames.modelo.Cliente;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.servidorfvgames.dao;
-import com.mycompany.servidorfvgames.modelo.Paquete;
-import com.mycompany.servidorfvgames.modelo.Producto;
+import com.mycompany.fvgames.modelo.Paquete;
+import com.mycompany.fvgames.modelo.Producto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
