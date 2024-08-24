@@ -42,7 +42,7 @@ public class PanelCarritoCompras extends JPanel {
         inputPanel.add(idProductoField);
         inputPanel.add(cantidadLabel);
         inputPanel.add(cantidadField);
-        inputPanel.add(new JLabel()); // Empty label for spacing
+        inputPanel.add(new JLabel());
         inputPanel.add(agregarProductoButton);
 
         carritoArea = new JTextArea();
@@ -75,6 +75,10 @@ public class PanelCarritoCompras extends JPanel {
             int idProducto = Integer.parseInt(idProductoField.getText());
             int cantidad = Integer.parseInt(cantidadField.getText());
 
+            // Mensajes de depuración
+            System.out.println("Intentando agregar producto al carrito...");
+            System.out.println("ID Producto: " + idProducto + ", Cantidad: " + cantidad);
+
             // Enviar solicitud para agregar producto al carrito
             Socket socket = new Socket("localhost", 12345); // Ajusta la IP y puerto según sea necesario
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -87,6 +91,10 @@ public class PanelCarritoCompras extends JPanel {
             // Respuesta del servidor
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             String respuesta = (String) in.readObject();
+
+            // Mensaje de depuración
+            System.out.println("Respuesta del servidor: " + respuesta);
+
             JOptionPane.showMessageDialog(this, respuesta);
 
             in.close();
@@ -97,9 +105,9 @@ public class PanelCarritoCompras extends JPanel {
             idProductoField.setText("");
             cantidadField.setText("");
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al agregar el producto al carrito: " + ex.getMessage());
-        }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al agregar el producto al carrito: " + ex.getMessage());
+            }
     }
 
     private void verCarrito() {
@@ -107,13 +115,14 @@ public class PanelCarritoCompras extends JPanel {
             // Enviar solicitud para ver el carrito
             Socket socket = new Socket("localhost", 12345);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
             out.writeObject("VER_CARRITO");
             out.flush();
 
             // Recibir la lista de productos en el carrito
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             List<Producto> carrito = (List<Producto>) in.readObject();
+            System.out.println(carrito.toString());
 
             // Mostrar los productos en el área de texto
             carritoArea.setText("");

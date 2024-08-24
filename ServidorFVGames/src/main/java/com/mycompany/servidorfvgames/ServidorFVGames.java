@@ -139,6 +139,7 @@ public class ServidorFVGames {
 
                                     case "VER_CARRITO":
                                         List<Producto> productosCarrito = carrito.obtenerProductos();
+                                        System.out.println(productosCarrito.toString());
                                         out.writeObject(productosCarrito);
                                         break;
 

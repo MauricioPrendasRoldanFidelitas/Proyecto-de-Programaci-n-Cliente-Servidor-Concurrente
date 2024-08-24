@@ -64,5 +64,18 @@ public class Producto implements Serializable {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Producto{");
+        sb.append("id=").append(id);
+        sb.append(", nombre=").append(nombre);
+        sb.append(", categoria=").append(categoria);
+        sb.append(", precio=").append(precio);
+        sb.append(", stock=").append(stock);
+        sb.append('}');
+        return sb.toString();
+    }
     
 }
