@@ -48,8 +48,9 @@ public class CompraDAO {
         List<Compra> compras = new ArrayList<>();
         try (Statement stmt = conexion.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                compras.add(new Compra(rs.getInt("id_cliente"),
-                        rs.getInt("id_producto"), rs.getInt("cantidad")));
+                Compra compra = new Compra(rs.getInt("id_cliente"), rs.getInt("id_producto"), rs.getInt("cantidad"));
+                compra.setFecha(rs.getDate("fecha"));
+                compras.add(compra);
             }
         }
         return compras;

@@ -28,7 +28,8 @@ public class CarritoCompras {
     public void agregarProducto(int idProducto, int cantidad) throws Exception {
         ProductoDAO productoDAO = new ProductoDAO();
         Producto producto = productoDAO.buscarPorId(idProducto);
-
+        System.out.println(producto);
+        
         if (producto == null) {
             throw new Exception("Producto no encontrado con el ID proporcionado.");
         }
@@ -37,13 +38,16 @@ public class CarritoCompras {
             throw new Exception("La cantidad debe ser mayor que cero.");
         }
 
-        producto.setStock(cantidad);
+        producto.setStock(producto.getStock() - cantidad);
         productos.add(producto);
+        System.out.println("Estos son mis productos después de agregar");
+        System.out.println(productos);
     }
 
-    // Otros métodos relacionados al carrito...
 
     public List<Producto> obtenerProductos() {
+        System.out.println("Estos son mis productos");
+        System.out.println(productos);
         return productos;
     }
     

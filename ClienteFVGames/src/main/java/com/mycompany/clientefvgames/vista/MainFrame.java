@@ -34,13 +34,15 @@ public class MainFrame extends javax.swing.JFrame {
         JTabbedPane tabbedPane = new JTabbedPane();
 
         // Agregar los diferentes paneles al JTabbedPane
+        tabbedPane.addTab("Ver Clientes", new PanelVerClientes());
+        tabbedPane.addTab("Ver Productos", new PanelVerProductos());
+        tabbedPane.addTab("Listado de Compras", new PanelComprasRealizadas());
         tabbedPane.addTab("Agregar Cliente", new PanelAgregarCliente());
         tabbedPane.addTab("Agregar Producto", new PanelAgregarProducto());
         tabbedPane.addTab("Agregar Compra", new PanelAgregarCompra());
         tabbedPane.addTab("Carrito de Compras", new PanelCarritoCompras());
-        tabbedPane.addTab("Ver Clientes", new PanelVerClientes());
-        tabbedPane.addTab("Ver Productos", new PanelVerProductos());
         tabbedPane.addTab("Gestionar Paquetes", new PanelGestionarPaquetes());
+        
 
         // Agregar el JTabbedPane al JFrame
         add(tabbedPane, BorderLayout.CENTER);

@@ -28,18 +28,17 @@ public class ServidorFVGames {
         try {
             serverSocket = new ServerSocket(12345);
             System.out.println("Servidor iniciado en el puerto 12345...");
-
+            CarritoCompras carrito = new CarritoCompras();
             while (true) {
                 try {
                     Socket clientSocket = serverSocket.accept();
                     new Thread(() -> {
                         try (ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
                              ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream())) {
-
                             ClienteDAO clienteDAO = new ClienteDAO();
                             ProductoDAO productoDAO = new ProductoDAO();
                             CompraDAO compraDAO = new CompraDAO();
-                            CarritoCompras carrito = new CarritoCompras();
+                            
                             PaqueteDAO paqueteDAO = new PaqueteDAO();
 
                             String request = (String) in.readObject();
@@ -138,6 +137,7 @@ public class ServidorFVGames {
                                         break;
 
                                     case "VER_CARRITO":
+                                        System.out.println(carrito.obtenerProductos());
                                         List<Producto> productosCarrito = carrito.obtenerProductos();
                                         System.out.println(productosCarrito.toString());
                                         out.writeObject(productosCarrito);
@@ -168,6 +168,18 @@ public class ServidorFVGames {
                                             Logger.getLogger(ServidorFVGames.class.getName()).log(Level.SEVERE, null, ex);
                                             out.writeObject("Error inesperado: " + ex.getMessage());
                                         }
+                                        break;
+                                        
+                                    case "CALCULAR_TOTAL":
+                                        double total = carrito.calcularTotal();
+                                        out.writeDouble(total);
+                                        out.flush();
+                                        break;
+                              
+                                    case "VACIAR_CARRITO":
+                                        carrito.vaciarCarrito();
+                                        out.writeObject("Carrito vaciado con éxito.");
+                                        out.flush();
                                         break;
 
 

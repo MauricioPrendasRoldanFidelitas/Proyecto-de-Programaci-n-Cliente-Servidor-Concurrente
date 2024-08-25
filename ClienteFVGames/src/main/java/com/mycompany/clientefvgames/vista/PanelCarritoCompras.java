@@ -22,12 +22,15 @@ public class PanelCarritoCompras extends JPanel {
     private JTextField cantidadField;
     private JButton agregarProductoButton;
     private JButton verCarritoButton;
+    private JButton calcularTotalButton;
+    private JButton eliminarProductoButton;
+    private JButton vaciarCarritoButton;
     private JTextArea carritoArea;
 
     public PanelCarritoCompras() {
         setLayout(new BorderLayout(10, 10));
 
-        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         
         JLabel idProductoLabel = new JLabel("ID Producto:");
         idProductoField = new JTextField();
@@ -37,6 +40,9 @@ public class PanelCarritoCompras extends JPanel {
         
         agregarProductoButton = new JButton("Agregar al Carrito");
         verCarritoButton = new JButton("Ver Carrito");
+        calcularTotalButton = new JButton("Calcular Total");
+        eliminarProductoButton = new JButton("Eliminar Producto");
+        vaciarCarritoButton = new JButton("Vaciar Carrito");
 
         inputPanel.add(idProductoLabel);
         inputPanel.add(idProductoField);
@@ -49,9 +55,15 @@ public class PanelCarritoCompras extends JPanel {
         carritoArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(carritoArea);
 
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        buttonPanel.add(verCarritoButton);
+        buttonPanel.add(calcularTotalButton);
+        buttonPanel.add(eliminarProductoButton);
+        buttonPanel.add(vaciarCarritoButton);
+
         add(inputPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
-        add(verCarritoButton, BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         // Acción del botón "Agregar al Carrito"
         agregarProductoButton.addActionListener(new ActionListener() {
@@ -68,6 +80,30 @@ public class PanelCarritoCompras extends JPanel {
                 verCarrito();
             }
         });
+
+        // Acción del botón "Calcular Total"
+        calcularTotalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calcularTotal();
+            }
+        });
+
+        // Acción del botón "Eliminar Producto"
+        eliminarProductoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminarProductoDelCarrito();
+            }
+        });
+
+        // Acción del botón "Vaciar Carrito"
+        vaciarCarritoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vaciarCarrito();
+            }
+        });
     }
 
     private void agregarProductoAlCarrito() {
@@ -75,12 +111,7 @@ public class PanelCarritoCompras extends JPanel {
             int idProducto = Integer.parseInt(idProductoField.getText());
             int cantidad = Integer.parseInt(cantidadField.getText());
 
-            // Mensajes de depuración
-            System.out.println("Intentando agregar producto al carrito...");
-            System.out.println("ID Producto: " + idProducto + ", Cantidad: " + cantidad);
-
-            // Enviar solicitud para agregar producto al carrito
-            Socket socket = new Socket("localhost", 12345); // Ajusta la IP y puerto según sea necesario
+            Socket socket = new Socket("localhost", 12345); 
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
             out.writeObject("AGREGAR_AL_CARRITO");
@@ -88,12 +119,8 @@ public class PanelCarritoCompras extends JPanel {
             out.writeInt(cantidad);
             out.flush();
 
-            // Respuesta del servidor
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             String respuesta = (String) in.readObject();
-
-            // Mensaje de depuración
-            System.out.println("Respuesta del servidor: " + respuesta);
 
             JOptionPane.showMessageDialog(this, respuesta);
 
@@ -101,18 +128,16 @@ public class PanelCarritoCompras extends JPanel {
             out.close();
             socket.close();
 
-            // Limpiar los campos después de agregar el producto
             idProductoField.setText("");
             cantidadField.setText("");
 
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error al agregar el producto al carrito: " + ex.getMessage());
-            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al agregar el producto al carrito: " + ex.getMessage());
+        }
     }
 
     private void verCarrito() {
         try {
-            // Enviar solicitud para ver el carrito
             Socket socket = new Socket("localhost", 12345);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -120,11 +145,7 @@ public class PanelCarritoCompras extends JPanel {
             out.writeObject("VER_CARRITO");
             out.flush();
 
-            // Recibir la lista de productos en el carrito
             List<Producto> carrito = (List<Producto>) in.readObject();
-            System.out.println(carrito.toString());
-
-            // Mostrar los productos en el área de texto
             carritoArea.setText("");
             for (Producto producto : carrito) {
                 carritoArea.append("ID: " + producto.getId() + ", Nombre: " + producto.getNombre() +
@@ -138,6 +159,77 @@ public class PanelCarritoCompras extends JPanel {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al ver el carrito: " + ex.getMessage());
+        }
+    }
+
+    private void calcularTotal() {
+        try {
+            Socket socket = new Socket("localhost", 12345);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
+            out.writeObject("CALCULAR_TOTAL");
+            out.flush();
+
+            double total = in.readDouble();
+
+            JOptionPane.showMessageDialog(this, "Total a pagar: " + total);
+
+            in.close();
+            out.close();
+            socket.close();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al calcular el total: " + ex.getMessage());
+        }
+    }
+
+    private void eliminarProductoDelCarrito() {
+        try {
+            int idProducto = Integer.parseInt(idProductoField.getText());
+
+            Socket socket = new Socket("localhost", 12345);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
+            out.writeObject("ELIMINAR_DEL_CARRITO");
+            out.writeInt(idProducto);
+            out.flush();
+
+            String respuesta = (String) in.readObject();
+
+            JOptionPane.showMessageDialog(this, respuesta);
+
+            in.close();
+            out.close();
+            socket.close();
+
+            idProductoField.setText("");
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar el producto del carrito: " + ex.getMessage());
+        }
+    }
+
+    private void vaciarCarrito() {
+        try {
+            Socket socket = new Socket("localhost", 12345);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
+            out.writeObject("VACIAR_CARRITO");
+            out.flush();
+
+            String respuesta = (String) in.readObject();
+
+            JOptionPane.showMessageDialog(this, respuesta);
+
+            in.close();
+            out.close();
+            socket.close();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al vaciar el carrito: " + ex.getMessage());
         }
     }
     /**
