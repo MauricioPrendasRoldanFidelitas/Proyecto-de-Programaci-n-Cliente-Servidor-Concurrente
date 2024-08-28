@@ -44,7 +44,7 @@ public class PanelAgregarCompra extends javax.swing.JPanel {
         add(idProductoField);
         add(cantidadLabel);
         add(cantidadField);
-        add(new JLabel()); // empty cell for spacing
+        add(new JLabel()); 
         add(agregarCompraButton);
 
         // Acción del botón
